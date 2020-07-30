@@ -1,3 +1,7 @@
+集成一些补丁后得到的一份适用于我个人的dynamic window manager.
+自启动脚本以及补丁alphasystray来自于theniceboy(https://github.com/theniceboy)，因为需要进行修改，所以没有以submodule的形式引用。
+所有使用的补丁放置于patches文件夹内，请自行取用。
+
 dwm - dynamic window manager
 ============================
 dwm is an extremely fast, small, and dynamic window manager for X.

@@ -6,7 +6,7 @@ include config.mk
 SRC = drw.c dwm.c util.c
 OBJ = ${SRC:.c=.o}
 
-all: options dwm
+all: options dwm scripts
 
 options:
 	@echo dwm build options:
@@ -19,7 +19,7 @@ options:
 
 ${OBJ}: config.h config.mk
 
-config.h:
+config.h:config.def.h
 	cp config.def.h $@
 
 dwm: ${OBJ}
@@ -37,15 +37,20 @@ dist: clean
 	rm -rf dwm-${VERSION}
 
 install: all
-	mkdir -p ${DESTDIR}${PREFIX}/bin
-	cp -f dwm ${DESTDIR}${PREFIX}/bin
-	chmod 755 ${DESTDIR}${PREFIX}/bin/dwm
-	mkdir -p ${DESTDIR}${MANPREFIX}/man1
-	sed "s/VERSION/${VERSION}/g" < dwm.1 > ${DESTDIR}${MANPREFIX}/man1/dwm.1
-	chmod 644 ${DESTDIR}${MANPREFIX}/man1/dwm.1
+	sudo mkdir -p ${DESTDIR}${PREFIX}/bin
+	sudo cp -f dwm ${DESTDIR}${PREFIX}/bin
+	sudo chmod 755 ${DESTDIR}${PREFIX}/bin/dwm
+	mkdir -p ~/.local/share/dwm
+	cp -r scripts/* ~/.local/share/dwm
+	chmod -R +x ~/.local/share/dwm
+	sudo mkdir -p ${DESTDIR}${MANPREFIX}/man1
+	sudo sed "s/VERSION/${VERSION}/g" < dwm.1 > dwm.1.tmp
+	sudo mv dwm.1.tmp ${DESTDIR}${MANPREFIX}/man1/dwm.1
+	sudo chmod 644 ${DESTDIR}${MANPREFIX}/man1/dwm.1
 
 uninstall:
-	rm -f ${DESTDIR}${PREFIX}/bin/dwm\
+	sudo rm -f ${DESTDIR}${PREFIX}/bin/dwm\
 		${DESTDIR}${MANPREFIX}/man1/dwm.1
+	rm -r ~/.local/share/dwm
 
 .PHONY: all options clean dist install uninstall
