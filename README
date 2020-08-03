@@ -1,6 +1,23 @@
-集成一些补丁后得到的一份适用于我个人的dynamic window manager.
-自启动脚本以及补丁alphasystray来自于theniceboy(https://github.com/theniceboy)，因为需要进行修改，所以没有以submodule的形式引用。
-所有使用的补丁放置于patches文件夹内，请自行取用。
+集成一些补丁后得到的一份适用于我个人的dynamic window manager. 改动大致如下：
+    - 字体：DejaVu Sans Mono(英文字体)，Noto Serif CJK SC(中文字体)
+    - 状态栏调制底部，Tag换成简写中文数字“一”到“九”
+    - MODKEY修改为Mod4，即Super(Windows)键，终端启用方式改为MODKEY+Enter
+    - 由于未知原因，dmenu在我的系统上偶尔会有些不正常，补充rofi为备用启动器，快捷键为Super+R
+    - 修改Makefile，添加config.def.h为文件config.h的构建依赖，安装命令添加将autostart脚本复制到~/.local/share/dwm的步骤，使得安装与修改更加便捷
+    - 补丁列表：
+        - alphasystray：提供状态栏透明效果和一个简单的系统托盘，为解决alpha补丁与systray补丁不兼容而诞生
+        - autostart：能够依此从"$XDG_DATA_HOME/dwm", "$HOME/.local/share/dwm", 和 "$HOME/.dwm"文件夹中寻找可执行的autostart.sh文件，在dwm启动后执行
+        - awesomebar：使标题栏显示多窗口标题而非当前窗口的标题；当点击标题栏时，对应窗口会隐藏
+        - hide_vacant_tags：当标签内没有窗口时，将会隐藏标签；如果所有标签内都没有窗口，则会保留一号标签
+        - rotatestack：可轮流切换窗口位当前标签内的主窗口
+        
+另外，由于修改快捷键后，没有修改dwm.1文件，因此使用 man dwm 命令获取的帮助文件中的快捷键大都是不可用的，需要查阅快捷键请阅读config.def.h文件。
+自启动脚本以及补丁alphasystray来自于theniceboy(https://github.com/theniceboy)。 因为需要进行大量修改，所以没有以git submodule的形式引用scripts。
+所有使用的补丁放置于patches文件夹内，如有需要，请自行取用。
+
+============================
+
+以下是suckless撰写的dwm自述文件：
 
 dwm - dynamic window manager
 ============================
